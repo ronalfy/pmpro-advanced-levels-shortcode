@@ -13,8 +13,13 @@ Domain Path: /languages
 global $pmproal_link_arguments;
 $pmproal_link_arguments = array();
 
+define( 'PMPRO_ADVANCED_LEVELS_VERSION', '0.2.4' );
+define( 'PMPRO_ADVANCED_LEVELS_FILE', __FILE__ );
+define( 'PMPRO_ADVANCED_LEVELS_DIR', dirname( __FILE__ ) );
+
 $path = dirname(__FILE__);
 require_once($path . "/templates/levels.php");
+require_once $path . '/blocks/blocks.php';
 
 
 function pmpro_advanced_levels_register_styles() {
