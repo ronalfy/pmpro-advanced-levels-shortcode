@@ -1,0 +1,58 @@
+.pmpro-block-element {
+    background: #FAFAFA;
+    padding: 20px;
+    text-align: center;
+}
+.pmpro-block-element span {
+    color: #AAA;
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+    font-weight: 700;
+    position: relative;
+    text-transform: uppercase;
+}
+.pmpro-block-element span:first-child {
+    font-size: 125%;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.pmpro-block-element span.pmpro-membership-title {
+    background: #FAFAFA;
+    color: #AAA;
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+    font-weight: 600;
+    padding: 10px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.pmpro_btn {
+	background-color: #EFEFEF;
+	background-image: none;
+	border: 1px solid #D6D6D6;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	color: #444;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 700;
+	margin: 0;
+	padding: 6px 12px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	vertical-align: middle;
+	white-space: nowrap;
+}
