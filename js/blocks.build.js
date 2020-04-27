@@ -188,7 +188,9 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
  * Internal block libraries
  */
 var __ = wp.i18n.__;
-var Component = wp.element.Component;
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment;
 var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     SelectControl = _wp$components.SelectControl,
@@ -217,35 +219,27 @@ var Edit = /*#__PURE__*/function (_Component) {
       var _this$props = this.props,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes;
-      var display_if_logged_in = attributes.display_if_logged_in,
-          show_menu = attributes.show_menu,
-          show_logout_link = attributes.show_logout_link,
-          location = attributes.location;
-      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(PanelBody, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(ToggleControl, {
-        label: __("Display If Logged In", "post-type-archive-mapping"),
-        checked: display_if_logged_in,
+      var backLink = attributes.backLink,
+          compare = attributes.compare,
+          checkoutButton = attributes.checkoutButton,
+          discountCode = attributes.discountCode,
+          expiration = attributes.expiration,
+          levels = attributes.levels,
+          layout = attributes.layout,
+          price = attributes.price,
+          renewButton = attributes.renewButton,
+          template = attributes.template;
+      var inspectorControls = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(PanelBody, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(ToggleControl, {
+        label: __("Display a Back Link?", "pmpro-advanced-levels-shortcode"),
+        help: __("Hide or show the Return to Home or Return to Your Account below the levels layout", "pmpro-advanced-levels-shortcode"),
+        checked: backLink,
         onChange: function onChange(value) {
           _this.props.setAttributes({
-            display_if_logged_in: value
-          });
-        }
-      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(ToggleControl, {
-        label: __("Show Menu", "post-type-archive-mapping"),
-        checked: show_menu,
-        onChange: function onChange(value) {
-          _this.props.setAttributes({
-            show_menu: value
-          });
-        }
-      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(ToggleControl, {
-        label: __("Show Logout Link", "post-type-archive-mapping"),
-        checked: show_logout_link,
-        onChange: function onChange(value) {
-          _this.props.setAttributes({
-            show_logout_link: value
+            backLink: value
           });
         }
       })));
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(Fragment, null, inspectorControls, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(PanelBody, null, __("test", "pmpro-advanced-levels-shortcode")));
     }
   }]);
 

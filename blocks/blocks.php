@@ -4,6 +4,7 @@
  *
  * @package blocks
  */
+
 defined( 'ABSPATH' ) || die( 'File cannot be accessed directly' );
 
 /**

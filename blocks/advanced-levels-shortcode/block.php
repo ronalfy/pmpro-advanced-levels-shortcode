@@ -18,8 +18,6 @@ add_action( 'init', __NAMESPACE__ . '\register_dynamic_block' );
 /**
  * Register the dynamic block.
  *
- * @since 2.3.0
- *
  * @return void
  */
 function register_dynamic_block() {
@@ -28,21 +26,52 @@ function register_dynamic_block() {
 	register_block_type(
 		'pmpro/advanced-levels-shortcode',
 		array(
-			'attributes'      => array(
-				'display_if_logged_in' => array(
+			'attributes' => array(
+				'backLink'        => array(
 					'type'    => 'boolean',
 					'default' => true,
 				),
-				'show_menu'            => array(
+				'compare'         => array(
+					'type'    => 'array',
+					'default' => array( '' ),
+					'items'   => array(
+						'type' => 'object',
+					),
+				),
+				'checkoutButton'  => array(
+					'type'    => 'string',
+					'default' => __( 'Select', 'pmpro-advanced-levels-shortcode' ),
+				),
+				'discountCode'    => array(
+					'type'    => 'string',
+					'default' => 'none',
+				),
+				'expiration'      => array(
 					'type'    => 'boolean',
 					'default' => true,
 				),
-				'show_logout_link'     => array(
-					'type'    => 'boolean',
-					'default' => true,
+				'levels'          => array(
+					'type'    => 'array',
+					'default' => array(),
 				),
+				'layout'          => array(
+					'type'    => 'string',
+					'default' => 'div',
+				),
+				'price'           => array(
+					'type'    => 'string',
+					'default' => 'short',
+				),
+				'renewButton'    => array(
+					'type'    => 'string',
+					'default' => __( 'Renew', 'pmpro-advanced-levels-shortcode' ),
+				),
+				'template'        => array(
+					'type'    => 'string',
+					'default' => 'none',
+				),
+				'render_callback' => __NAMESPACE__ . '\render_dynamic_block',
 			),
-			'render_callback' => __NAMESPACE__ . '\render_dynamic_block',
 		)
 	);
 }

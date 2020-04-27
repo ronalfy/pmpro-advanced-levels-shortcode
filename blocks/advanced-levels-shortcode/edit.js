@@ -2,7 +2,7 @@
  * Internal block libraries
  */
 const { __ } = wp.i18n;
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 const { PanelBody, SelectControl, ToggleControl } = wp.components;
 const { InspectorControls } = wp.editor;
 
@@ -17,43 +17,44 @@ export default class Edit extends Component {
 	render() {
 		const { attributes, setAttributes } = this.props;
 		const {
-			display_if_logged_in,
-			show_menu,
-			show_logout_link,
-			location,
+			backLink,
+			compare,
+			checkoutButton,
+			discountCode,
+			expiration,
+			levels,
+			layout,
+			price,
+			renewButton,
+			template,
 		} = attributes;
-		return (
+		const inspectorControls = (
 			<InspectorControls>
 				<PanelBody>
 					<ToggleControl
-						label={__("Display If Logged In", "post-type-archive-mapping")}
-						checked={display_if_logged_in}
+						label={__(
+							"Display a Back Link?",
+							"pmpro-advanced-levels-shortcode"
+						)}
+						help={__(
+							"Hide or show the Return to Home or Return to Your Account below the levels layout",
+							"pmpro-advanced-levels-shortcode"
+						)}
+						checked={backLink}
 						onChange={(value) => {
 							this.props.setAttributes({
-								display_if_logged_in: value,
-							});
-						}}
-					/>
-					<ToggleControl
-						label={__("Show Menu", "post-type-archive-mapping")}
-						checked={show_menu}
-						onChange={(value) => {
-							this.props.setAttributes({
-								show_menu: value,
-							});
-						}}
-					/>
-					<ToggleControl
-						label={__("Show Logout Link", "post-type-archive-mapping")}
-						checked={show_logout_link}
-						onChange={(value) => {
-							this.props.setAttributes({
-								show_logout_link: value,
+								backLink: value,
 							});
 						}}
 					/>
 				</PanelBody>
 			</InspectorControls>
+		);
+		return (
+			<Fragment>
+				{inspectorControls}
+				<PanelBody>{__("test", "pmpro-advanced-levels-shortcode")}</PanelBody>
+			</Fragment>
 		);
 	}
 }
