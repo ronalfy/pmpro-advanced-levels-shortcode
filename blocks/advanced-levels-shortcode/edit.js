@@ -4,7 +4,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { PanelBody, SelectControl, ToggleControl } = wp.components;
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor;
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -28,6 +28,23 @@ export default class Edit extends Component {
 			renewButton,
 			template,
 		} = attributes;
+		const templateOptions = [
+			{ value: "none", label: __("None", "pmpro-advanced-levels-shortcode") },
+			{ value: "bootstrap", label: __("Bootstrap", "pmpro-advanced-levels-shortcode") },
+			{ value: "genesis", label: __("Genesis", "pmpro-advanced-levels-shortcode") },
+			{ value: "woo themes", label: __("WooThemes", "pmpro-advanced-levels-shortcode") },
+			{ value: "gantry", label: __("Gantry", "pmpro-advanced-levels-shortcode") },
+			{ value: "pagelines", label: __("Pagelines", "pmpro-advanced-levels-shortcode") },
+			{ value: "foundation", label: __("Foundation", "pmpro-advanced-levels-shortcode") },
+		];
+		const layoutOptions = [
+			{ value: "div", label: __("Div", "pmpro-advanced-levels-shortcode") },
+			{ value: "table", label: __("Table", "pmpro-advanced-levels-shortcode") },
+			{ value: "2col", label: __("2 Columns", "pmpro-advanced-levels-shortcode") },
+			{ value: "3col", label: __("3 Columns", "pmpro-advanced-levels-shortcode") },
+			{ value: "4col", label: __("4 Columns", "pmpro-advanced-levels-shortcode") },
+			{ value: "compare_table", label: __("Compare Table", "pmpro-advanced-levels-shortcode") },
+		];
 		const inspectorControls = (
 			<InspectorControls>
 				<PanelBody>
@@ -53,7 +70,33 @@ export default class Edit extends Component {
 		return (
 			<Fragment>
 				{inspectorControls}
-				<PanelBody>{__("test", "pmpro-advanced-levels-shortcode")}</PanelBody>
+				<PanelBody>
+					<h2>{__('Choose a Layout', 'pmpro-advanced-levels-shortcode' )}</h2>
+					<div>
+						<label>{__('Template', 'pmpro-advanced-levels-shortcode')}</label><br />
+						<SelectControl
+							options={templateOptions}
+							value={template}
+							onChange={value => {
+								this.props.setAttributes({
+									template: value,
+								});
+							}}
+						/>
+					</div>
+					<div>
+						<label>{__('Layout', 'pmpro-advanced-levels-shortcode')}</label><br />
+						<SelectControl
+							options={layoutOptions}
+							value={layout}
+							onChange={value => {
+								this.props.setAttributes({
+									layout: value,
+								});
+							}}
+						/>
+					</div>
+				</PanelBody>
 			</Fragment>
 		);
 	}
