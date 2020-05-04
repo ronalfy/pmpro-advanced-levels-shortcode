@@ -219,10 +219,17 @@ var Edit = /*#__PURE__*/function (_Component) {
 
     _this = _super.apply(this, arguments);
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "onLevelCheckboxChange", function (event) {});
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "onLevelCheckboxChange", function (id, value) {
+      var selectedLevels = _this.state.selectedLevels;
+      selectedLevels[id] = value;
+
+      _this.setState({
+        selectedLevels: selectedLevels
+      });
+    });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "isChecked", function (levelId) {
-      if (selectedLevels[levelId]) {
+      if (_this.state.selectedLevels[levelId]) {
         return true;
       }
 
@@ -237,9 +244,9 @@ var Edit = /*#__PURE__*/function (_Component) {
         }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(CheckboxControl, {
           checked: _this.isChecked(level.value),
           onChange: function onChange(e) {
-            _this.onLevelCheckboxChange(e);
+            _this.onLevelCheckboxChange(level.value, e);
           },
-          label: level.name
+          label: level.label
         }));
       });
     });
@@ -335,7 +342,7 @@ var Edit = /*#__PURE__*/function (_Component) {
             layout: value
           });
         }
-      })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __('Select Levels to Display', 'pmpro-advanced-levels-shortcode')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), this.outputLevelCheckboxes)));
+      })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __('Select Levels to Display', 'pmpro-advanced-levels-shortcode')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), this.outputLevelCheckboxes())));
     }
   }]);
 

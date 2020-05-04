@@ -17,12 +17,16 @@ export default class Edit extends Component {
 		}
 	}
 
-	onLevelCheckboxChange = ( event ) => {
-
+	onLevelCheckboxChange = ( id, value ) => {
+		let selectedLevels = this.state.selectedLevels;
+		selectedLevels[id] = value;
+		this.setState( {
+			selectedLevels: selectedLevels 
+		});
 	}
 
 	isChecked = ( levelId ) => {
-		if ( selectedLevels[levelId] ) {
+		if ( this.state.selectedLevels[levelId] ) {
 			return true;
 		}
 		return false;
@@ -36,8 +40,8 @@ export default class Edit extends Component {
 					<Fragment key={level.value}>
 						<CheckboxControl 
 							checked={this.isChecked(level.value)}
-							onChange={(e) => { this.onLevelCheckboxChange(e)}}
-							label={level.name}
+							onChange={(e) => { this.onLevelCheckboxChange(level.value, e)}}
+							label={level.label}
 						/>
 					</Fragment>
 				)
@@ -130,7 +134,7 @@ export default class Edit extends Component {
 					</div>
 					<div>
 						<label>{__('Select Levels to Display', 'pmpro-advanced-levels-shortcode')}</label><br />
-						{this.outputLevelCheckboxes}
+						{this.outputLevelCheckboxes()}
 					</div>
 				</PanelBody>
 			</Fragment>
