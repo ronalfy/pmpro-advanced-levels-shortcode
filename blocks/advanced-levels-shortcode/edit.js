@@ -3,7 +3,7 @@
  */
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { PanelBody, SelectControl, ToggleControl } = wp.components;
+const { PanelBody, SelectControl, ToggleControl, CheckboxControl } = wp.components;
 const { InspectorControls } = wp.blockEditor;
 
 /**
@@ -12,6 +12,37 @@ const { InspectorControls } = wp.blockEditor;
 export default class Edit extends Component {
 	constructor() {
 		super(...arguments);
+		this.state = {
+			selectedLevels: [],
+		}
+	}
+
+	onLevelCheckboxChange = ( event ) => {
+
+	}
+
+	isChecked = ( levelId ) => {
+		if ( selectedLevels[levelId] ) {
+			return true;
+		}
+		return false;
+	}
+
+	outputLevelCheckboxes = () => {
+		const levelOptions = pmpro.all_level_values_and_labels;
+		return (
+			levelOptions.map( ( level ) => {
+				return (
+					<Fragment key={level.value}>
+						<CheckboxControl 
+							checked={this.isChecked(level.value)}
+							onChange={(e) => { this.onLevelCheckboxChange(e)}}
+							label={level.name}
+						/>
+					</Fragment>
+				)
+			})
+		)
 	}
 
 	render() {
@@ -45,6 +76,7 @@ export default class Edit extends Component {
 			{ value: "4col", label: __("4 Columns", "pmpro-advanced-levels-shortcode") },
 			{ value: "compare_table", label: __("Compare Table", "pmpro-advanced-levels-shortcode") },
 		];
+
 		const inspectorControls = (
 			<InspectorControls>
 				<PanelBody>
@@ -95,6 +127,10 @@ export default class Edit extends Component {
 								});
 							}}
 						/>
+					</div>
+					<div>
+						<label>{__('Select Levels to Display', 'pmpro-advanced-levels-shortcode')}</label><br />
+						{this.outputLevelCheckboxes}
 					</div>
 				</PanelBody>
 			</Fragment>
