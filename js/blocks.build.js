@@ -263,9 +263,16 @@ var Edit = /*#__PURE__*/function (_Component) {
           validationMessage: __("You must select a level to continue", "pmpro-advanced-levels-shortcode")
         });
       } else {
+        var view = _this.props.attributes.layout != 'compare' ? 'preview' : 'compare';
+
+        _this.props.setAttributes({
+          view: view
+        });
+
         _this.setState({
           validationErrors: false,
-          validationMessage: ""
+          validationMessage: "",
+          view: view
         });
       }
     });
@@ -286,11 +293,11 @@ var Edit = /*#__PURE__*/function (_Component) {
       return noLevelsSelected;
     });
 
-    console.log(_this.props);
     _this.state = {
       selectedLevels: _this.props.attributes.levels || [],
       validationErrors: false,
-      validationMessage: ""
+      validationMessage: "",
+      view: _this.props.attributes.view
     };
     return _this;
   }
@@ -312,7 +319,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           layout = attributes.layout,
           price = attributes.price,
           renewButton = attributes.renewButton,
-          template = attributes.template;
+          template = attributes.template,
+          view = attributes.view;
       var templateOptions = [{
         value: "none",
         label: __("None", "pmpro-advanced-levels-shortcode")

@@ -50,7 +50,7 @@ function register_dynamic_block() {
 					'type'    => 'boolean',
 					'default' => true,
 				),
-				'levels'       => array(
+				'levels'          => array(
 					'type'    => 'array',
 					'default' => array( '' ),
 					'items'   => array(
@@ -65,13 +65,17 @@ function register_dynamic_block() {
 					'type'    => 'string',
 					'default' => 'short',
 				),
-				'renewButton'    => array(
+				'renewButton'     => array(
 					'type'    => 'string',
 					'default' => __( 'Renew', 'pmpro-advanced-levels-shortcode' ),
 				),
 				'template'        => array(
 					'type'    => 'string',
 					'default' => 'none',
+				),
+				'view'            => array(
+					'type'    => 'string',
+					'default' => 'build', /* can be build (initial layout), 'preview', or 'compare' */
 				),
 				'render_callback' => __NAMESPACE__ . '\render_dynamic_block',
 			),

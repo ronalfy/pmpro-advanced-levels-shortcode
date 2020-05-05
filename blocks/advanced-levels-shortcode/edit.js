@@ -18,12 +18,12 @@ const { InspectorControls } = wp.blockEditor;
 export default class Edit extends Component {
 	constructor() {
 		super(...arguments);
-		console.log( this.props );
 
 		this.state = {
 			selectedLevels: this.props.attributes.levels || [],
 			validationErrors: false,
 			validationMessage: "",
+			view: this.props.attributes.view,
 		};
 	}
 
@@ -71,9 +71,14 @@ export default class Edit extends Component {
 				),
 			});
 		} else {
+			const view = this.props.attributes.layout != 'compare' ? 'preview' : 'compare';
+			this.props.setAttributes( {
+				view: view,
+			} );
 			this.setState({
 				validationErrors: false,
 				validationMessage: "",
+				view: view,
 			});
 		}
 	};
@@ -106,6 +111,7 @@ export default class Edit extends Component {
 			price,
 			renewButton,
 			template,
+			view,
 		} = attributes;
 		const templateOptions = [
 			{ value: "none", label: __("None", "pmpro-advanced-levels-shortcode") },
