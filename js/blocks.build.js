@@ -201,7 +201,8 @@ var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     SelectControl = _wp$components.SelectControl,
     ToggleControl = _wp$components.ToggleControl,
-    CheckboxControl = _wp$components.CheckboxControl;
+    CheckboxControl = _wp$components.CheckboxControl,
+    Button = _wp$components.Button;
 var InspectorControls = wp.blockEditor.InspectorControls;
 /**
  * Create an Inspector Controls wrapper Component
@@ -342,7 +343,10 @@ var Edit = /*#__PURE__*/function (_Component) {
             layout: value
           });
         }
-      })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __('Select Levels to Display', 'pmpro-advanced-levels-shortcode')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), this.outputLevelCheckboxes())));
+      })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __('Select Levels to Display', 'pmpro-advanced-levels-shortcode')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), this.outputLevelCheckboxes()), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Button, {
+        isPrimary: true,
+        isLarge: true
+      }, __('Build Layout', 'pmpro-advanced-levels-shortcode')))));
     }
   }]);
 

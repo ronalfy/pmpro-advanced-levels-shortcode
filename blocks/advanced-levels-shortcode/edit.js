@@ -3,7 +3,7 @@
  */
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { PanelBody, SelectControl, ToggleControl, CheckboxControl } = wp.components;
+const { PanelBody, SelectControl, ToggleControl, CheckboxControl, Button } = wp.components;
 const { InspectorControls } = wp.blockEditor;
 
 /**
@@ -135,6 +135,14 @@ export default class Edit extends Component {
 					<div>
 						<label>{__('Select Levels to Display', 'pmpro-advanced-levels-shortcode')}</label><br />
 						{this.outputLevelCheckboxes()}
+					</div>
+					<div>
+						<Button
+							isPrimary={true}
+							isLarge={true}
+						>
+							{__('Build Layout', 'pmpro-advanced-levels-shortcode')}
+						</Button>
 					</div>
 				</PanelBody>
 			</Fragment>
