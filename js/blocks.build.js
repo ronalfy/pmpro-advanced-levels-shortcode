@@ -270,7 +270,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           validationMessage: __("You must select a level to continue", "pmpro-advanced-levels-shortcode")
         });
       } else {
-        var view = _this.props.attributes.layout != 'compare' ? 'preview' : 'compare';
+        var view = _this.props.attributes.layout != "compare" ? "preview" : "compare";
 
         _this.props.setAttributes({
           view: view
@@ -300,8 +300,38 @@ var Edit = /*#__PURE__*/function (_Component) {
       return noLevelsSelected;
     });
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "loadShortcode", function () {
+      var _this$props$attribute = _this.props.attributes,
+          backLink = _this$props$attribute.backLink,
+          checkoutButton = _this$props$attribute.checkoutButton,
+          description = _this$props$attribute.description,
+          discountCode = _this$props$attribute.discountCode,
+          expiration = _this$props$attribute.expiration,
+          levels = _this$props$attribute.levels,
+          layout = _this$props$attribute.layout,
+          price = _this$props$attribute.price,
+          renewButton = _this$props$attribute.renewButton,
+          template = _this$props$attribute.template;
+      axios__WEBPACK_IMPORTED_MODULE_8___default.a.get(pmpro_advanced_levels.rest_url + "pmpro/v2/get_advanced_level_shortcode", {
+        back_link: backLink,
+        checkout_button: checkoutButton,
+        description: description,
+        discount_code: discountCode,
+        expiration: expiration,
+        levels: levels,
+        layout: layout,
+        price: price,
+        renew_button: renewButton,
+        template: template
+      }).then(function (response) {
+        console.log(response);
+      });
+    });
+
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "componentWillMount", function () {
-      alert('test');
+      if (_this.props.attributes.view === "preview") {
+        _this.loadShortcode();
+      }
     });
 
     _this.state = {
@@ -323,6 +353,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           setAttributes = _this$props.setAttributes;
       var backLink = attributes.backLink,
           compare = attributes.compare,
+          description = attributes.description,
           checkoutButton = attributes.checkoutButton,
           discountCode = attributes.discountCode,
           expiration = attributes.expiration,
@@ -384,7 +415,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       })));
 
-      if (view === 'build') {
+      if (view === "build") {
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Fragment, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h2", null, __("Choose a Layout", "pmpro-advanced-levels-shortcode")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __("Template", "pmpro-advanced-levels-shortcode")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(SelectControl, {
           options: templateOptions,
           value: template,
@@ -411,7 +442,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("strong", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", null, this.state.validationMessage))))));
       }
 
-      if (view === 'preview') {
+      if (view === "preview") {
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Fragment, null, "test");
       }
     }

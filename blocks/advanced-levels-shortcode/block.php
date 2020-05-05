@@ -15,7 +15,7 @@ if ( ! function_exists( 'register_block_type' ) ) {
 }
 
 add_action( 'init', __NAMESPACE__ . '\register_dynamic_block' );
-add_action( 'rest_api_init', 'register_routes' );
+add_action( 'rest_api_init', __NAMESPACE__ . '\register_routes' );
 
 /**
  * Register routes.
@@ -26,7 +26,7 @@ function register_routes() {
 		'/get_advanced_level_shortcode',
 		array(
 			'methods'  => 'GET',
-			'callback' => 'get_shortcode_output',
+			'callback' => __NAMESPACE__ . '\get_shortcode_output',
 		)
 	);
 }
@@ -76,6 +76,10 @@ function register_dynamic_block() {
 					'default' => 'none',
 				),
 				'expiration'      => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				'description'      => array(
 					'type'    => 'boolean',
 					'default' => true,
 				),

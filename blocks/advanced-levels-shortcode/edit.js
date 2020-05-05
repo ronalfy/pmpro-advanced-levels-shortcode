@@ -33,7 +33,7 @@ export default class Edit extends Component {
 	onLevelCheckboxChange = (id, value) => {
 		let selectedLevels = this.state.selectedLevels;
 		selectedLevels[id] = value;
-		this.props.setAttributes( {
+		this.props.setAttributes({
 			levels: selectedLevels,
 		});
 		this.setState({
@@ -74,10 +74,11 @@ export default class Edit extends Component {
 				),
 			});
 		} else {
-			const view = this.props.attributes.layout != 'compare' ? 'preview' : 'compare';
-			this.props.setAttributes( {
+			const view =
+				this.props.attributes.layout != "compare" ? "preview" : "compare";
+			this.props.setAttributes({
 				view: view,
-			} );
+			});
 			this.setState({
 				validationErrors: false,
 				validationMessage: "",
@@ -101,15 +102,49 @@ export default class Edit extends Component {
 		return noLevelsSelected;
 	};
 
+	loadShortcode = () => {
+		const {
+			backLink,
+			checkoutButton,
+			description,
+			discountCode,
+			expiration,
+			levels,
+			layout,
+			price,
+			renewButton,
+			template,
+		} = this.props.attributes;
+		axios
+			.get(pmpro_advanced_levels.rest_url + `pmpro/v2/get_advanced_level_shortcode`, {
+				back_link: backLink,
+				checkout_button: checkoutButton,
+				description: description,
+				discount_code: discountCode,
+				expiration: expiration,
+				levels: levels,
+				layout: layout,
+				price: price,
+				renew_button: renewButton,
+				template: template,
+			})
+			.then((response) => {
+				console.log( response );
+			});
+	};
+
 	componentWillMount = () => {
-		alert( 'test' );
-	}
+		if (this.props.attributes.view === "preview") {
+			this.loadShortcode();
+		}
+	};
 
 	render() {
 		const { attributes, setAttributes } = this.props;
 		const {
 			backLink,
 			compare,
+			description,
 			checkoutButton,
 			discountCode,
 			expiration,
@@ -190,7 +225,7 @@ export default class Edit extends Component {
 				</PanelBody>
 			</InspectorControls>
 		);
-		if ( view === 'build' ) {
+		if (view === "build") {
 			return (
 				<Fragment>
 					<PanelBody>
@@ -254,12 +289,8 @@ export default class Edit extends Component {
 				</Fragment>
 			);
 		}
-		if ( view === 'preview' ) {
-			return (
-				<Fragment>
-					test
-				</Fragment>
-			)
+		if (view === "preview") {
+			return <Fragment>test</Fragment>;
 		}
 	}
 }

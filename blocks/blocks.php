@@ -24,6 +24,13 @@ function pmpro_advanced_levels_block_editor_scripts() {
 		PMPRO_ADVANCED_LEVELS_VERSION,
 		true
 	);
+	wp_localize_script(
+		'pmpro-advanced-levels-blocks-editor-js',
+		'pmpro_advanced_levels',
+		array(
+			'rest_url' => esc_url( rest_url() ),
+		)
+	);
 
 	// Enqueue optional editor only styles.
 	wp_enqueue_style(
