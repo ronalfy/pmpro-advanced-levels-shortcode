@@ -15,6 +15,35 @@ if ( ! function_exists( 'register_block_type' ) ) {
 }
 
 add_action( 'init', __NAMESPACE__ . '\register_dynamic_block' );
+add_action( 'rest_api_init', 'register_routes' );
+
+/**
+ * Register routes.
+ */
+function register_routes() {
+	register_rest_route(
+		'pmpro/v2',
+		'/get_advanced_level_shortcode',
+		array(
+			'methods'  => 'GET',
+			'callback' => 'get_shortcode_output',
+		)
+	);
+}
+
+/**
+ * Get the shortcode output from a REST call.
+ *
+ * @param REST $request The REST request array.
+ *
+ * @return string HTML of the shortcode.
+ */
+function get_shortcode_output( $request ) {
+	ob_start();
+	echo '<div>' . 'this is a test' . '</div>';
+	return ob_get_clean();
+}
+
 /**
  * Register the dynamic block.
  *

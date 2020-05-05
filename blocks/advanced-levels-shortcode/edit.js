@@ -1,3 +1,6 @@
+import axios from "axios";
+var HtmlToReactParser = require("html-to-react").Parser;
+
 /**
  * Internal block libraries
  */
@@ -98,6 +101,10 @@ export default class Edit extends Component {
 		return noLevelsSelected;
 	};
 
+	componentWillMount = () => {
+		alert( 'test' );
+	}
+
 	render() {
 		const { attributes, setAttributes } = this.props;
 		const {
@@ -183,68 +190,76 @@ export default class Edit extends Component {
 				</PanelBody>
 			</InspectorControls>
 		);
-		return (
-			<Fragment>
-				{inspectorControls}
-				<PanelBody>
-					<h2>{__("Choose a Layout", "pmpro-advanced-levels-shortcode")}</h2>
-					<div>
-						<label>{__("Template", "pmpro-advanced-levels-shortcode")}</label>
-						<br />
-						<SelectControl
-							options={templateOptions}
-							value={template}
-							onChange={(value) => {
-								this.props.setAttributes({
-									template: value,
-								});
-							}}
-						/>
-					</div>
-					<div>
-						<label>{__("Layout", "pmpro-advanced-levels-shortcode")}</label>
-						<br />
-						<SelectControl
-							options={layoutOptions}
-							value={layout}
-							onChange={(value) => {
-								this.props.setAttributes({
-									layout: value,
-								});
-							}}
-						/>
-					</div>
-					<div>
-						<label>
-							{__(
-								"Select Levels to Display",
-								"pmpro-advanced-levels-shortcode"
-							)}
-						</label>
-						<br />
-						{this.outputLevelCheckboxes()}
-					</div>
-					<div>
-						<Button
-							isPrimary={true}
-							isLarge={true}
-							onClick={this.validateLayout}
-							disabled={this.isLayoutButtonDisabled()}
-						>
-							{__("Build Layout", "pmpro-advanced-levels-shortcode")}
-						</Button>
-					</div>
-					{this.state.validationErrors && (
-						<Fragment>
-							<div className="notice error">
-								<strong>
-									<p>{this.state.validationMessage}</p>
-								</strong>
-							</div>
-						</Fragment>
-					)}
-				</PanelBody>
-			</Fragment>
-		);
+		if ( view === 'build' ) {
+			return (
+				<Fragment>
+					<PanelBody>
+						<h2>{__("Choose a Layout", "pmpro-advanced-levels-shortcode")}</h2>
+						<div>
+							<label>{__("Template", "pmpro-advanced-levels-shortcode")}</label>
+							<br />
+							<SelectControl
+								options={templateOptions}
+								value={template}
+								onChange={(value) => {
+									this.props.setAttributes({
+										template: value,
+									});
+								}}
+							/>
+						</div>
+						<div>
+							<label>{__("Layout", "pmpro-advanced-levels-shortcode")}</label>
+							<br />
+							<SelectControl
+								options={layoutOptions}
+								value={layout}
+								onChange={(value) => {
+									this.props.setAttributes({
+										layout: value,
+									});
+								}}
+							/>
+						</div>
+						<div>
+							<label>
+								{__(
+									"Select Levels to Display",
+									"pmpro-advanced-levels-shortcode"
+								)}
+							</label>
+							<br />
+							{this.outputLevelCheckboxes()}
+						</div>
+						<div>
+							<Button
+								isPrimary={true}
+								isLarge={true}
+								onClick={this.validateLayout}
+								disabled={this.isLayoutButtonDisabled()}
+							>
+								{__("Build Layout", "pmpro-advanced-levels-shortcode")}
+							</Button>
+						</div>
+						{this.state.validationErrors && (
+							<Fragment>
+								<div className="notice error">
+									<strong>
+										<p>{this.state.validationMessage}</p>
+									</strong>
+								</div>
+							</Fragment>
+						)}
+					</PanelBody>
+				</Fragment>
+			);
+		}
+		if ( view === 'preview' ) {
+			return (
+				<Fragment>
+					test
+				</Fragment>
+			)
+		}
 	}
 }
