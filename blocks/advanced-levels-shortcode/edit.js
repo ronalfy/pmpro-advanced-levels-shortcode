@@ -14,6 +14,8 @@ export default class Edit extends Component {
 		super(...arguments);
 		this.state = {
 			selectedLevels: [],
+			validationErrors: false,
+			validationMessage: '',
 		}
 	}
 
@@ -47,6 +49,32 @@ export default class Edit extends Component {
 				)
 			})
 		)
+	}
+	validateLayout = () => {
+		if ( this.state.selectedLevels.length <= 0 ) {
+			this.setState( {
+				validationErrors: true,
+				validationMessage: __('You must select a level to continue', 'pmpro-advanced-levels-shortcode' ),
+			})
+		} else {
+			this.setState( {
+				validationErrors: false,
+				validationMessage: '',
+			})
+		}
+	}
+
+	isLayoutButtonDisabled = () => {
+		if ( this.state.selectedLevels.length == 0 ) {
+			return true;
+		}
+		let noLevelsSelected = true;
+		this.state.selectedLevels.forEach( (level) => {
+			if ( level ) {
+				noLevelsSelected = false;
+			}
+		});
+		return noLevelsSelected;
 	}
 
 	render() {
@@ -140,10 +168,23 @@ export default class Edit extends Component {
 						<Button
 							isPrimary={true}
 							isLarge={true}
+							onClick={this.validateLayout}
+							disabled={this.isLayoutButtonDisabled()}
 						>
 							{__('Build Layout', 'pmpro-advanced-levels-shortcode')}
 						</Button>
 					</div>
+					{this.state.validationErrors && 
+						<Fragment>
+							<div className="notice error">
+								<strong>
+									<p>
+										{this.state.validationMessage}
+									</p>
+								</strong>
+							</div>
+						</Fragment>
+					}
 				</PanelBody>
 			</Fragment>
 		);
