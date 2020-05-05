@@ -3,7 +3,13 @@
  */
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { PanelBody, SelectControl, ToggleControl, CheckboxControl, Button } = wp.components;
+const {
+	PanelBody,
+	SelectControl,
+	ToggleControl,
+	CheckboxControl,
+	Button,
+} = wp.components;
 const { InspectorControls } = wp.blockEditor;
 
 /**
@@ -15,67 +21,72 @@ export default class Edit extends Component {
 		this.state = {
 			selectedLevels: [],
 			validationErrors: false,
-			validationMessage: '',
-		}
+			validationMessage: "",
+		};
 	}
 
-	onLevelCheckboxChange = ( id, value ) => {
+	onLevelCheckboxChange = (id, value) => {
 		let selectedLevels = this.state.selectedLevels;
 		selectedLevels[id] = value;
-		this.setState( {
-			selectedLevels: selectedLevels 
+		this.setState({
+			selectedLevels: selectedLevels,
 		});
-	}
+	};
 
-	isChecked = ( levelId ) => {
-		if ( this.state.selectedLevels[levelId] ) {
+	isChecked = (levelId) => {
+		if (this.state.selectedLevels[levelId]) {
 			return true;
 		}
 		return false;
-	}
+	};
 
 	outputLevelCheckboxes = () => {
 		const levelOptions = pmpro.all_level_values_and_labels;
-		return (
-			levelOptions.map( ( level ) => {
-				return (
-					<Fragment key={level.value}>
-						<CheckboxControl 
-							checked={this.isChecked(level.value)}
-							onChange={(e) => { this.onLevelCheckboxChange(level.value, e)}}
-							label={level.label}
-						/>
-					</Fragment>
-				)
-			})
-		)
-	}
+		return levelOptions.map((level) => {
+			return (
+				<Fragment key={level.value}>
+					<CheckboxControl
+						checked={this.isChecked(level.value)}
+						onChange={(e) => {
+							this.onLevelCheckboxChange(level.value, e);
+						}}
+						label={level.label}
+					/>
+				</Fragment>
+			);
+		});
+	};
 	validateLayout = () => {
-		if ( this.state.selectedLevels.length <= 0 ) {
-			this.setState( {
+		if (this.state.selectedLevels.length <= 0) {
+			this.setState({
 				validationErrors: true,
-				validationMessage: __('You must select a level to continue', 'pmpro-advanced-levels-shortcode' ),
-			})
+				validationMessage: __(
+					"You must select a level to continue",
+					"pmpro-advanced-levels-shortcode"
+				),
+			});
 		} else {
-			this.setState( {
+			this.setState({
 				validationErrors: false,
-				validationMessage: '',
-			})
+				validationMessage: "",
+			});
 		}
-	}
-
+	};
+	/**
+	 * Determine if the layout creation button should be disabled or not.
+	 */
 	isLayoutButtonDisabled = () => {
-		if ( this.state.selectedLevels.length == 0 ) {
+		if (this.state.selectedLevels.length == 0) {
 			return true;
 		}
 		let noLevelsSelected = true;
-		this.state.selectedLevels.forEach( (level) => {
-			if ( level ) {
+		this.state.selectedLevels.forEach((level) => {
+			if (level) {
 				noLevelsSelected = false;
 			}
 		});
 		return noLevelsSelected;
-	}
+	};
 
 	render() {
 		const { attributes, setAttributes } = this.props;
@@ -93,20 +104,50 @@ export default class Edit extends Component {
 		} = attributes;
 		const templateOptions = [
 			{ value: "none", label: __("None", "pmpro-advanced-levels-shortcode") },
-			{ value: "bootstrap", label: __("Bootstrap", "pmpro-advanced-levels-shortcode") },
-			{ value: "genesis", label: __("Genesis", "pmpro-advanced-levels-shortcode") },
-			{ value: "woo themes", label: __("WooThemes", "pmpro-advanced-levels-shortcode") },
-			{ value: "gantry", label: __("Gantry", "pmpro-advanced-levels-shortcode") },
-			{ value: "pagelines", label: __("Pagelines", "pmpro-advanced-levels-shortcode") },
-			{ value: "foundation", label: __("Foundation", "pmpro-advanced-levels-shortcode") },
+			{
+				value: "bootstrap",
+				label: __("Bootstrap", "pmpro-advanced-levels-shortcode"),
+			},
+			{
+				value: "genesis",
+				label: __("Genesis", "pmpro-advanced-levels-shortcode"),
+			},
+			{
+				value: "woo themes",
+				label: __("WooThemes", "pmpro-advanced-levels-shortcode"),
+			},
+			{
+				value: "gantry",
+				label: __("Gantry", "pmpro-advanced-levels-shortcode"),
+			},
+			{
+				value: "pagelines",
+				label: __("Pagelines", "pmpro-advanced-levels-shortcode"),
+			},
+			{
+				value: "foundation",
+				label: __("Foundation", "pmpro-advanced-levels-shortcode"),
+			},
 		];
 		const layoutOptions = [
 			{ value: "div", label: __("Div", "pmpro-advanced-levels-shortcode") },
 			{ value: "table", label: __("Table", "pmpro-advanced-levels-shortcode") },
-			{ value: "2col", label: __("2 Columns", "pmpro-advanced-levels-shortcode") },
-			{ value: "3col", label: __("3 Columns", "pmpro-advanced-levels-shortcode") },
-			{ value: "4col", label: __("4 Columns", "pmpro-advanced-levels-shortcode") },
-			{ value: "compare_table", label: __("Compare Table", "pmpro-advanced-levels-shortcode") },
+			{
+				value: "2col",
+				label: __("2 Columns", "pmpro-advanced-levels-shortcode"),
+			},
+			{
+				value: "3col",
+				label: __("3 Columns", "pmpro-advanced-levels-shortcode"),
+			},
+			{
+				value: "4col",
+				label: __("4 Columns", "pmpro-advanced-levels-shortcode"),
+			},
+			{
+				value: "compare_table",
+				label: __("Compare Table", "pmpro-advanced-levels-shortcode"),
+			},
 		];
 
 		const inspectorControls = (
@@ -135,13 +176,14 @@ export default class Edit extends Component {
 			<Fragment>
 				{inspectorControls}
 				<PanelBody>
-					<h2>{__('Choose a Layout', 'pmpro-advanced-levels-shortcode' )}</h2>
+					<h2>{__("Choose a Layout", "pmpro-advanced-levels-shortcode")}</h2>
 					<div>
-						<label>{__('Template', 'pmpro-advanced-levels-shortcode')}</label><br />
+						<label>{__("Template", "pmpro-advanced-levels-shortcode")}</label>
+						<br />
 						<SelectControl
 							options={templateOptions}
 							value={template}
-							onChange={value => {
+							onChange={(value) => {
 								this.props.setAttributes({
 									template: value,
 								});
@@ -149,11 +191,12 @@ export default class Edit extends Component {
 						/>
 					</div>
 					<div>
-						<label>{__('Layout', 'pmpro-advanced-levels-shortcode')}</label><br />
+						<label>{__("Layout", "pmpro-advanced-levels-shortcode")}</label>
+						<br />
 						<SelectControl
 							options={layoutOptions}
 							value={layout}
-							onChange={value => {
+							onChange={(value) => {
 								this.props.setAttributes({
 									layout: value,
 								});
@@ -161,7 +204,13 @@ export default class Edit extends Component {
 						/>
 					</div>
 					<div>
-						<label>{__('Select Levels to Display', 'pmpro-advanced-levels-shortcode')}</label><br />
+						<label>
+							{__(
+								"Select Levels to Display",
+								"pmpro-advanced-levels-shortcode"
+							)}
+						</label>
+						<br />
 						{this.outputLevelCheckboxes()}
 					</div>
 					<div>
@@ -171,20 +220,18 @@ export default class Edit extends Component {
 							onClick={this.validateLayout}
 							disabled={this.isLayoutButtonDisabled()}
 						>
-							{__('Build Layout', 'pmpro-advanced-levels-shortcode')}
+							{__("Build Layout", "pmpro-advanced-levels-shortcode")}
 						</Button>
 					</div>
-					{this.state.validationErrors && 
+					{this.state.validationErrors && (
 						<Fragment>
 							<div className="notice error">
 								<strong>
-									<p>
-										{this.state.validationMessage}
-									</p>
+									<p>{this.state.validationMessage}</p>
 								</strong>
 							</div>
 						</Fragment>
-					}
+					)}
 				</PanelBody>
 			</Fragment>
 		);
