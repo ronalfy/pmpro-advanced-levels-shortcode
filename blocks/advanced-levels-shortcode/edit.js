@@ -18,8 +18,10 @@ const { InspectorControls } = wp.blockEditor;
 export default class Edit extends Component {
 	constructor() {
 		super(...arguments);
+		console.log( this.props );
+
 		this.state = {
-			selectedLevels: [],
+			selectedLevels: this.props.attributes.levels || [],
 			validationErrors: false,
 			validationMessage: "",
 		};
@@ -28,6 +30,9 @@ export default class Edit extends Component {
 	onLevelCheckboxChange = (id, value) => {
 		let selectedLevels = this.state.selectedLevels;
 		selectedLevels[id] = value;
+		this.props.setAttributes( {
+			levels: selectedLevels,
+		});
 		this.setState({
 			selectedLevels: selectedLevels,
 		});

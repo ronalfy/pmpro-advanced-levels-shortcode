@@ -50,9 +50,12 @@ function register_dynamic_block() {
 					'type'    => 'boolean',
 					'default' => true,
 				),
-				'levels'          => array(
+				'levels'       => array(
 					'type'    => 'array',
-					'default' => array(),
+					'default' => array( '' ),
+					'items'   => array(
+						'type' => 'object',
+					),
 				),
 				'layout'          => array(
 					'type'    => 'string',

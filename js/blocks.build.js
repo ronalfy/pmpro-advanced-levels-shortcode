@@ -224,6 +224,10 @@ var Edit = /*#__PURE__*/function (_Component) {
       var selectedLevels = _this.state.selectedLevels;
       selectedLevels[id] = value;
 
+      _this.props.setAttributes({
+        levels: selectedLevels
+      });
+
       _this.setState({
         selectedLevels: selectedLevels
       });
@@ -282,8 +286,9 @@ var Edit = /*#__PURE__*/function (_Component) {
       return noLevelsSelected;
     });
 
+    console.log(_this.props);
     _this.state = {
-      selectedLevels: [],
+      selectedLevels: _this.props.attributes.levels || [],
       validationErrors: false,
       validationMessage: ""
     };
