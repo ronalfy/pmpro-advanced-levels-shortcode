@@ -25,7 +25,7 @@ function register_routes() {
 		'pmpro/v2',
 		'/get_advanced_level_shortcode',
 		array(
-			'methods'  => 'GET',
+			'methods'  => 'POST',
 			'callback' => __NAMESPACE__ . '\get_shortcode_output',
 		)
 	);
@@ -40,7 +40,31 @@ function register_routes() {
  */
 function get_shortcode_output( $request ) {
 	ob_start();
-	echo '<div>' . 'this is a test' . '</div>';
+	error_log( print_r( $request['levels'], true ) );
+	$back_link       = filter_var( $request['back_link'], FILTER_VALIDATE_BOOLEAN ) ? '1' : '0';
+	$checkout_button = sanitize_text_field( filter_input( INPUT_POST, $request['checkout_button'], FILTER_DEFAULT ) );
+	$discount_code   = sanitize_text_field( filter_input( INPUT_POST, $request['discount_code'], FILTER_DEFAULT ) );
+	$expiration      = filter_var( $request['expiration'], FILTER_VALIDATE_BOOLEAN ) ? '1' : '0';
+	$description     = filter_var( $request['description'], FILTER_VALIDATE_BOOLEAN ) ? '1' : '0';
+	$levels          = filter_input( INPUT_POST, $request['levels'], FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+	$layout          = sanitize_text_field( filter_input( INPUT_POST, $request['layout'], FILTER_DEFAULT ) );
+	$template        = sanitize_text_field( filter_input( INPUT_POST, $request['template'], FILTER_DEFAULT ) );
+	$price           = sanitize_text_field( filter_input( INPUT_POST, $request['price'], FILTER_DEFAULT ) );
+	$renew_button    = sanitize_text_field( filter_input( INPUT_POST, $request['renew_button'], FILTER_DEFAULT ) );
+	echo do_shortcode(
+		sprintf(
+			'[pmpro_advanced_levels back_link="%s" checkout_button="%s", discount_code="%s" expiration="%s" description="%s", levels="%s" layout="%s" template="%s" price="%s" renew_button="%s"',
+			esc_attr( $back_link ),
+			esc_attr( $checkout_button ),
+			esc_attr( $discount_code ),
+			esc_attr( $expiration ),
+			esc_attr( $description ),
+			esc_attr( $levels ),
+			esc_attr( $layout ),
+			esc_attr( $price ),
+			esc_attr( $renew_button )
+		)
+	);
 	return ob_get_clean();
 }
 
@@ -79,7 +103,7 @@ function register_dynamic_block() {
 					'type'    => 'boolean',
 					'default' => true,
 				),
-				'description'      => array(
+				'description'     => array(
 					'type'    => 'boolean',
 					'default' => true,
 				),

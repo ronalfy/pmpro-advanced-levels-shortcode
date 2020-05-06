@@ -312,8 +312,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           price = _this$props$attribute.price,
           renewButton = _this$props$attribute.renewButton,
           template = _this$props$attribute.template;
-      axios__WEBPACK_IMPORTED_MODULE_8___default.a.get(pmpro_advanced_levels.rest_url + "pmpro/v2/get_advanced_level_shortcode", {
-        back_link: backLink,
+      axios__WEBPACK_IMPORTED_MODULE_8___default.a.post(pmpro_advanced_levels.rest_url + "pmpro/v2/get_advanced_level_shortcode", {
+        backlink: backLink,
         checkout_button: checkoutButton,
         description: description,
         discount_code: discountCode,

@@ -116,8 +116,8 @@ export default class Edit extends Component {
 			template,
 		} = this.props.attributes;
 		axios
-			.get(pmpro_advanced_levels.rest_url + `pmpro/v2/get_advanced_level_shortcode`, {
-				back_link: backLink,
+			.post(pmpro_advanced_levels.rest_url + `pmpro/v2/get_advanced_level_shortcode`, {
+				backlink: backLink,
 				checkout_button: checkoutButton,
 				description: description,
 				discount_code: discountCode,
