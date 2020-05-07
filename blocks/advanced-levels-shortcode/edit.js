@@ -23,7 +23,7 @@ export default class Edit extends Component {
 		super(...arguments);
 
 		this.state = {
-			selectedLevels: this.props.attributes.levels || [],
+			selectedLevels: this.props.attributes.levels || {},
 			validationErrors: false,
 			validationMessage: "",
 			view: this.props.attributes.view,
@@ -33,9 +33,7 @@ export default class Edit extends Component {
 	onLevelCheckboxChange = (id, value) => {
 		let selectedLevels = this.state.selectedLevels;
 		selectedLevels[id] = value;
-		this.props.setAttributes({
-			levels: selectedLevels,
-		});
+		this.props.attributes.levels = selectedLevels;
 		this.setState({
 			selectedLevels: selectedLevels,
 		});
@@ -94,11 +92,11 @@ export default class Edit extends Component {
 			return true;
 		}
 		let noLevelsSelected = true;
-		this.state.selectedLevels.forEach((level) => {
-			if (level) {
+		for ( const level in this.state.selectedLevels ) {
+			if ( this.state.selectedLevels[level] ) {
 				noLevelsSelected = false;
 			}
-		});
+		}
 		return noLevelsSelected;
 	};
 
@@ -155,6 +153,7 @@ export default class Edit extends Component {
 			template,
 			view,
 		} = attributes;
+		console.log(levels);
 		const templateOptions = [
 			{ value: "none", label: __("None", "pmpro-advanced-levels-shortcode") },
 			{

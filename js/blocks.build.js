@@ -230,10 +230,7 @@ var Edit = /*#__PURE__*/function (_Component) {
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "onLevelCheckboxChange", function (id, value) {
       var selectedLevels = _this.state.selectedLevels;
       selectedLevels[id] = value;
-
-      _this.props.setAttributes({
-        levels: selectedLevels
-      });
+      _this.props.attributes.levels = selectedLevels;
 
       _this.setState({
         selectedLevels: selectedLevels
@@ -291,11 +288,11 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       var noLevelsSelected = true;
 
-      _this.state.selectedLevels.forEach(function (level) {
-        if (level) {
+      for (var level in _this.state.selectedLevels) {
+        if (_this.state.selectedLevels[level]) {
           noLevelsSelected = false;
         }
-      });
+      }
 
       return noLevelsSelected;
     });
@@ -335,7 +332,7 @@ var Edit = /*#__PURE__*/function (_Component) {
     });
 
     _this.state = {
-      selectedLevels: _this.props.attributes.levels || [],
+      selectedLevels: _this.props.attributes.levels || {},
       validationErrors: false,
       validationMessage: "",
       view: _this.props.attributes.view
@@ -363,6 +360,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           renewButton = attributes.renewButton,
           template = attributes.template,
           view = attributes.view;
+      console.log(levels);
       var templateOptions = [{
         value: "none",
         label: __("None", "pmpro-advanced-levels-shortcode")

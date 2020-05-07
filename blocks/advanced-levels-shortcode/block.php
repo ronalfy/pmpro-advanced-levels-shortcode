@@ -86,7 +86,7 @@ function register_dynamic_block() {
 				),
 				'compare'         => array(
 					'type'    => 'array',
-					'default' => array( '' ),
+					'default' => [],
 					'items'   => array(
 						'type' => 'object',
 					),
@@ -108,11 +108,7 @@ function register_dynamic_block() {
 					'default' => true,
 				),
 				'levels'          => array(
-					'type'    => 'array',
-					'default' => array( '' ),
-					'items'   => array(
-						'type' => 'object',
-					),
+					'type'    => 'object',
 				),
 				'layout'          => array(
 					'type'    => 'string',
