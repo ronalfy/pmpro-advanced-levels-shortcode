@@ -12,6 +12,7 @@ const {
 	ToggleControl,
 	CheckboxControl,
 	Button,
+	TextControl,
 } = wp.components;
 const { InspectorControls } = wp.blockEditor;
 
@@ -256,6 +257,31 @@ export default class Edit extends Component {
 							this.props.setAttributes({
 								backLink: value,
 							});
+							this.loadShortcode();
+						}}
+					/>
+					<TextControl
+						label={__('Checkout Text', 'pmpro-advanced-levels-shortcode')}
+						value={checkoutButton}
+						onChange={(value) => {
+							this.props.setAttributes({
+								checkoutButton: value,
+							});
+							this.props.attributes.checkoutButton = value;
+							// todo - Add timer to load timer on change.
+							this.loadShortcode();
+						}}
+					/>
+					<TextControl
+						label={__('Renew Text', 'pmpro-advanced-levels-shortcode')}
+						value={renewButton}
+						onChange={(value) => {
+							this.props.setAttributes({
+								renewButton: value,
+							});
+							this.props.attributes.renewButton = value;
+							// todo - Add timer to load timer on change.
+							this.loadShortcode();
 						}}
 					/>
 				</PanelBody>

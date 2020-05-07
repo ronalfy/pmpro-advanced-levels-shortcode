@@ -209,7 +209,8 @@ var _wp$components = wp.components,
     SelectControl = _wp$components.SelectControl,
     ToggleControl = _wp$components.ToggleControl,
     CheckboxControl = _wp$components.CheckboxControl,
-    Button = _wp$components.Button;
+    Button = _wp$components.Button,
+    TextControl = _wp$components.TextControl;
 var InspectorControls = wp.blockEditor.InspectorControls;
 /**
  * Create an Inspector Controls wrapper Component
@@ -443,6 +444,32 @@ var Edit = /*#__PURE__*/function (_Component) {
           _this2.props.setAttributes({
             backLink: value
           });
+
+          _this2.loadShortcode();
+        }
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(TextControl, {
+        label: __('Checkout Text', 'pmpro-advanced-levels-shortcode'),
+        value: checkoutButton,
+        onChange: function onChange(value) {
+          _this2.props.setAttributes({
+            checkoutButton: value
+          });
+
+          _this2.props.attributes.checkoutButton = value; // todo - Add timer to load timer on change.
+
+          _this2.loadShortcode();
+        }
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(TextControl, {
+        label: __('Renew Text', 'pmpro-advanced-levels-shortcode'),
+        value: renewButton,
+        onChange: function onChange(value) {
+          _this2.props.setAttributes({
+            renewButton: value
+          });
+
+          _this2.props.attributes.renewButton = value; // todo - Add timer to load timer on change.
+
+          _this2.loadShortcode();
         }
       })));
 

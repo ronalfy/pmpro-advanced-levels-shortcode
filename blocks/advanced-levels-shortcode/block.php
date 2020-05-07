@@ -57,21 +57,25 @@ function get_shortcode_output( $request ) {
 			$selected_levels[] = $level_id;
 		}
 	}
-	echo do_shortcode(
-		sprintf(
-			'[pmpro_advanced_levels back_link="%s" checkout_button="%s", discount_code="%s" expiration="%s" description="%s", levels="%s" layout="%s" template="%s" price="%s" renew_button="%s"]',
-			esc_attr( $back_link ),
-			esc_attr( $checkout_button ),
-			esc_attr( $discount_code ),
-			esc_attr( $expiration ),
-			esc_attr( $description ),
-			esc_attr( implode( ',', $selected_levels ) ),
-			esc_attr( $layout ),
-			esc_attr( $template ),
-			esc_attr( $price ),
-			esc_attr( $renew_button )
-		)
-	);
+	if ( empty( $selected_levels ) ) {
+		echo '<h2>' . esc_html__( 'Please select a level to display', 'pmpro-advanced-levels-shortcode' ) . '</h2>';
+	} else {
+		echo do_shortcode(
+			sprintf(
+				'[pmpro_advanced_levels back_link="%s" checkout_button="%s" discount_code="%s" expiration="%s" description="%s" levels="%s" layout="%s" template="%s" price="%s" renew_button="%s"]',
+				esc_attr( $back_link ),
+				esc_attr( $checkout_button ? $checkout_button : __( 'Select', 'pmpro-advanced-levels-shortcode' ) ),
+				esc_attr( $discount_code ),
+				esc_attr( $expiration ),
+				esc_attr( $description ),
+				esc_attr( implode( ',', $selected_levels ) ),
+				esc_attr( $layout ),
+				esc_attr( $template ),
+				esc_attr( $price ),
+				esc_attr( $renew_button ? $renew_button : __( 'Renew', 'pmpro-advanced-levels-shortcode' ) )
+			)
+		);
+	}
 	return ob_get_clean();
 }
 
