@@ -40,6 +40,7 @@ function register_routes() {
  */
 function get_shortcode_output( $request ) {
 	ob_start();
+	$more_button     = filter_var( $request['more_button'], FILTER_VALIDATE_BOOLEAN ) ? '1' : '0';
 	$back_link       = filter_var( $request['back_link'], FILTER_VALIDATE_BOOLEAN ) ? '1' : '0';
 	$account_button  = sanitize_text_field( $request['account_button'] );
 	$checkout_button = sanitize_text_field( $request['checkout_button'] );
@@ -63,7 +64,8 @@ function get_shortcode_output( $request ) {
 	} else {
 		echo do_shortcode(
 			sprintf(
-				'[pmpro_advanced_levels account_button="%s" back_link="%s" checkout_button="%s" discount_code="%s" expiration="%s" description="%s" levels="%s" layout="%s" template="%s" price="%s" renew_button="%s"]',
+				'[pmpro_advanced_levels more_button="%s" account_button="%s" back_link="%s" checkout_button="%s" discount_code="%s" expiration="%s" description="%s" levels="%s" layout="%s" template="%s" price="%s" renew_button="%s"]',
+				esc_attr( $more_button ),
 				esc_attr( $account_button ? $account_button : __( 'Your Level', 'pmpro-advanced-levels-shortcode' ) ),
 				esc_attr( $back_link ),
 				esc_attr( $checkout_button ? $checkout_button : __( 'Select', 'pmpro-advanced-levels-shortcode' ) ),
@@ -123,6 +125,10 @@ function register_dynamic_block() {
 				'description'     => array(
 					'type'    => 'boolean',
 					'default' => true,
+				),
+				'moreButton'     => array(
+					'type'    => 'boolean',
+					'default' => false,
 				),
 				'levels'          => array(
 					'type'    => 'object',

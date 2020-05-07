@@ -116,6 +116,7 @@ export default class Edit extends Component {
 			layout,
 			price,
 			renewButton,
+			moreButton,
 			template,
 		} = this.props.attributes;
 		axios
@@ -131,6 +132,7 @@ export default class Edit extends Component {
 				price: price,
 				renew_button: renewButton,
 				template: template,
+				more_button: moreButton,
 			})
 			.then((response) => {
 				let htmlToReactParser = new HtmlToReactParser();
@@ -162,6 +164,7 @@ export default class Edit extends Component {
 			renewButton,
 			template,
 			view,
+			moreButton,
 		} = attributes;
 		const templateOptions = [
 			{ value: "none", label: __("None", "pmpro-advanced-levels-shortcode") },
@@ -210,12 +213,21 @@ export default class Edit extends Component {
 				label: __("Compare Table", "pmpro-advanced-levels-shortcode"),
 			},
 		];
+		const priceOptions = [
+			{ value: "short", label: __("Short", "pmpro-advanced-levels-shortcode") },
+			{ value: "full", label: __("Full", "pmpro-advanced-levels-shortcode") },
+			{
+				value: "hide",
+				label: __("Hide", "pmpro-advanced-levels-shortcode"),
+			},
+		];
 
 		const inspectorControls = (
 			<InspectorControls>
 				<PanelBody
 					initialOpen={true}
 					title={__("Display", "pmpro-advanced-levels-shortcode")}
+					icon="admin-appearance"
 				>
 					<SelectControl
 						label={__('Choose a Template', 'pmpro-advanced-levels-shortcode')}
@@ -252,7 +264,8 @@ export default class Edit extends Component {
 				</PanelBody>
 				<PanelBody
 					initialOpen={false}
-					title={__("Display Text", "pmpro-advanced-levels-shortcode")}
+					title={__("Text Display", "pmpro-advanced-levels-shortcode")}
+					icon="text"
 				>
 					<TextControl
 						label={__('Account Button', 'pmpro-advanced-levels-shortcode')}
@@ -294,6 +307,7 @@ export default class Edit extends Component {
 				<PanelBody
 					initialOpen={false}
 					title={__("Options", "pmpro-advanced-levels-shortcode")}
+					icon="admin-generic"
 				>
 					<ToggleControl
 						label={__(
@@ -328,6 +342,67 @@ export default class Edit extends Component {
 								description: value,
 							});
 							this.props.attributes.description = value;
+							this.loadShortcode();
+						}}
+					/>
+					<ToggleControl
+						label={__(
+							"Display Expiration?",
+							"pmpro-advanced-levels-shortcode"
+						)}
+						help={__(
+							"Hide or show the level expiration",
+							"pmpro-advanced-levels-shortcode"
+						)}
+						checked={expiration}
+						onChange={(value) => {
+							this.props.setAttributes({
+								expiration: value,
+							});
+							this.props.attributes.expiration = value;
+							this.loadShortcode();
+						}}
+					/>
+					<ToggleControl
+						label={__(
+							"Display More button?",
+							"pmpro-advanced-levels-shortcode"
+						)}
+						help={__(
+							"Hide or show the more button for the level",
+							"pmpro-advanced-levels-shortcode"
+						)}
+						checked={moreButton}
+						onChange={(value) => {
+							this.props.setAttributes({
+								moreButton: value,
+							});
+							this.props.attributes.moreButton = value;
+							this.loadShortcode();
+						}}
+					/>
+					<SelectControl
+						label={__('Price Display', 'pmpro-advanced-levels-shortcode')}
+						options={priceOptions}
+						value={price}
+						onChange={(value) => {
+							this.props.attributes.price = value;
+							this.props.setAttributes({
+								price: value,
+							});
+							this.loadShortcode();
+						}}
+					/>
+					<TextControl
+						label={__('Discount Code', 'pmpro-advanced-levels-shortcode')}
+						value={discountCode}
+						help={__('Enter a discount code to be applied to the levels', 'pmpro-advanced-levels-shortcode')}
+						onChange={(value) => {
+							this.props.setAttributes({
+								discountCode: value,
+							});
+							this.props.attributes.discountCode = value;
+							// todo - Add timer to load timer on change.
 							this.loadShortcode();
 						}}
 					/>

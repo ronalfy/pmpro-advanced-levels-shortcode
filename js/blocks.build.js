@@ -312,6 +312,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           layout = _this$props$attribute.layout,
           price = _this$props$attribute.price,
           renewButton = _this$props$attribute.renewButton,
+          moreButton = _this$props$attribute.moreButton,
           template = _this$props$attribute.template;
       axios__WEBPACK_IMPORTED_MODULE_8___default.a.post(pmpro_advanced_levels.rest_url + "pmpro/v2/get_advanced_level_shortcode", {
         account_button: accountButton,
@@ -324,7 +325,8 @@ var Edit = /*#__PURE__*/function (_Component) {
         layout: layout,
         price: price,
         renew_button: renewButton,
-        template: template
+        template: template,
+        more_button: moreButton
       }).then(function (response) {
         var htmlToReactParser = new HtmlToReactParser();
 
@@ -371,7 +373,8 @@ var Edit = /*#__PURE__*/function (_Component) {
           price = attributes.price,
           renewButton = attributes.renewButton,
           template = attributes.template,
-          view = attributes.view;
+          view = attributes.view,
+          moreButton = attributes.moreButton;
       var templateOptions = [{
         value: "none",
         label: __("None", "pmpro-advanced-levels-shortcode")
@@ -413,9 +416,20 @@ var Edit = /*#__PURE__*/function (_Component) {
         value: "compare_table",
         label: __("Compare Table", "pmpro-advanced-levels-shortcode")
       }];
+      var priceOptions = [{
+        value: "short",
+        label: __("Short", "pmpro-advanced-levels-shortcode")
+      }, {
+        value: "full",
+        label: __("Full", "pmpro-advanced-levels-shortcode")
+      }, {
+        value: "hide",
+        label: __("Hide", "pmpro-advanced-levels-shortcode")
+      }];
       var inspectorControls = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, {
         initialOpen: true,
-        title: __("Display", "pmpro-advanced-levels-shortcode")
+        title: __("Display", "pmpro-advanced-levels-shortcode"),
+        icon: "admin-appearance"
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(SelectControl, {
         label: __('Choose a Template', 'pmpro-advanced-levels-shortcode'),
         options: templateOptions,
@@ -444,7 +458,8 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __("Select Levels to Display", "pmpro-advanced-levels-shortcode")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), this.outputLevelCheckboxes()), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, {
         initialOpen: false,
-        title: __("Display Text", "pmpro-advanced-levels-shortcode")
+        title: __("Text Display", "pmpro-advanced-levels-shortcode"),
+        icon: "text"
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(TextControl, {
         label: __('Account Button', 'pmpro-advanced-levels-shortcode'),
         value: accountButton,
@@ -483,7 +498,8 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, {
         initialOpen: false,
-        title: __("Options", "pmpro-advanced-levels-shortcode")
+        title: __("Options", "pmpro-advanced-levels-shortcode"),
+        icon: "admin-generic"
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(ToggleControl, {
         label: __("Display a Back Link?", "pmpro-advanced-levels-shortcode"),
         help: __("Hide or show the Return to Home or Return to Your Account below the levels layout", "pmpro-advanced-levels-shortcode"),
@@ -507,6 +523,58 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
 
           _this2.props.attributes.description = value;
+
+          _this2.loadShortcode();
+        }
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(ToggleControl, {
+        label: __("Display Expiration?", "pmpro-advanced-levels-shortcode"),
+        help: __("Hide or show the level expiration", "pmpro-advanced-levels-shortcode"),
+        checked: expiration,
+        onChange: function onChange(value) {
+          _this2.props.setAttributes({
+            expiration: value
+          });
+
+          _this2.props.attributes.expiration = value;
+
+          _this2.loadShortcode();
+        }
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(ToggleControl, {
+        label: __("Display More button?", "pmpro-advanced-levels-shortcode"),
+        help: __("Hide or show the more button for the level", "pmpro-advanced-levels-shortcode"),
+        checked: moreButton,
+        onChange: function onChange(value) {
+          _this2.props.setAttributes({
+            moreButton: value
+          });
+
+          _this2.props.attributes.moreButton = value;
+
+          _this2.loadShortcode();
+        }
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(SelectControl, {
+        label: __('Price Display', 'pmpro-advanced-levels-shortcode'),
+        options: priceOptions,
+        value: price,
+        onChange: function onChange(value) {
+          _this2.props.attributes.price = value;
+
+          _this2.props.setAttributes({
+            price: value
+          });
+
+          _this2.loadShortcode();
+        }
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(TextControl, {
+        label: __('Discount Code', 'pmpro-advanced-levels-shortcode'),
+        value: discountCode,
+        help: __('Enter a discount code to be applied to the levels', 'pmpro-advanced-levels-shortcode'),
+        onChange: function onChange(value) {
+          _this2.props.setAttributes({
+            discountCode: value
+          });
+
+          _this2.props.attributes.discountCode = value; // todo - Add timer to load timer on change.
 
           _this2.loadShortcode();
         }
