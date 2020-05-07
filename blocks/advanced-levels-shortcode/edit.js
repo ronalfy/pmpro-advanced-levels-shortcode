@@ -106,6 +106,7 @@ export default class Edit extends Component {
 
 	loadShortcode = () => {
 		const {
+			accountButton,
 			backLink,
 			checkoutButton,
 			description,
@@ -119,6 +120,7 @@ export default class Edit extends Component {
 		} = this.props.attributes;
 		axios
 			.post(pmpro_advanced_levels.rest_url + `pmpro/v2/get_advanced_level_shortcode`, {
+				account_button: accountButton,
 				backlink: backLink,
 				checkout_button: checkoutButton,
 				description: description,
@@ -147,6 +149,7 @@ export default class Edit extends Component {
 	render() {
 		const { attributes, setAttributes } = this.props;
 		const {
+			accountButton,
 			backLink,
 			compare,
 			description,
@@ -210,7 +213,10 @@ export default class Edit extends Component {
 
 		const inspectorControls = (
 			<InspectorControls>
-				<PanelBody>
+				<PanelBody
+					initialOpen={true}
+					title={__("Display", "pmpro-advanced-levels-shortcode")}
+				>
 					<SelectControl
 						label={__('Choose a Template', 'pmpro-advanced-levels-shortcode')}
 						options={templateOptions}
@@ -243,20 +249,20 @@ export default class Edit extends Component {
 					</label>
 					<br />
 					{this.outputLevelCheckboxes()}
-					<ToggleControl
-						label={__(
-							"Display a Back Link?",
-							"pmpro-advanced-levels-shortcode"
-						)}
-						help={__(
-							"Hide or show the Return to Home or Return to Your Account below the levels layout",
-							"pmpro-advanced-levels-shortcode"
-						)}
-						checked={backLink}
+				</PanelBody>
+				<PanelBody
+					initialOpen={false}
+					title={__("Display Text", "pmpro-advanced-levels-shortcode")}
+				>
+					<TextControl
+						label={__('Account Button', 'pmpro-advanced-levels-shortcode')}
+						value={accountButton}
 						onChange={(value) => {
 							this.props.setAttributes({
-								backLink: value,
+								accountButton: value,
 							});
+							this.props.attributes.accountButton = value;
+							// todo - Add timer to load timer on change.
 							this.loadShortcode();
 						}}
 					/>
@@ -281,6 +287,47 @@ export default class Edit extends Component {
 							});
 							this.props.attributes.renewButton = value;
 							// todo - Add timer to load timer on change.
+							this.loadShortcode();
+						}}
+					/>
+				</PanelBody>
+				<PanelBody
+					initialOpen={false}
+					title={__("Options", "pmpro-advanced-levels-shortcode")}
+				>
+					<ToggleControl
+						label={__(
+							"Display a Back Link?",
+							"pmpro-advanced-levels-shortcode"
+						)}
+						help={__(
+							"Hide or show the Return to Home or Return to Your Account below the levels layout",
+							"pmpro-advanced-levels-shortcode"
+						)}
+						checked={backLink}
+						onChange={(value) => {
+							this.props.setAttributes({
+								backLink: value,
+							});
+							this.props.attributes.backLink = value;
+							this.loadShortcode();
+						}}
+					/>
+					<ToggleControl
+						label={__(
+							"Display Description?",
+							"pmpro-advanced-levels-shortcode"
+						)}
+						help={__(
+							"Hide or show the level description",
+							"pmpro-advanced-levels-shortcode"
+						)}
+						checked={description}
+						onChange={(value) => {
+							this.props.setAttributes({
+								description: value,
+							});
+							this.props.attributes.description = value;
 							this.loadShortcode();
 						}}
 					/>

@@ -302,6 +302,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "loadShortcode", function () {
       var _this$props$attribute = _this.props.attributes,
+          accountButton = _this$props$attribute.accountButton,
           backLink = _this$props$attribute.backLink,
           checkoutButton = _this$props$attribute.checkoutButton,
           description = _this$props$attribute.description,
@@ -313,6 +314,7 @@ var Edit = /*#__PURE__*/function (_Component) {
           renewButton = _this$props$attribute.renewButton,
           template = _this$props$attribute.template;
       axios__WEBPACK_IMPORTED_MODULE_8___default.a.post(pmpro_advanced_levels.rest_url + "pmpro/v2/get_advanced_level_shortcode", {
+        account_button: accountButton,
         backlink: backLink,
         checkout_button: checkoutButton,
         description: description,
@@ -357,7 +359,8 @@ var Edit = /*#__PURE__*/function (_Component) {
       var _this$props = this.props,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes;
-      var backLink = attributes.backLink,
+      var accountButton = attributes.accountButton,
+          backLink = attributes.backLink,
           compare = attributes.compare,
           description = attributes.description,
           checkoutButton = attributes.checkoutButton,
@@ -410,7 +413,10 @@ var Edit = /*#__PURE__*/function (_Component) {
         value: "compare_table",
         label: __("Compare Table", "pmpro-advanced-levels-shortcode")
       }];
-      var inspectorControls = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(SelectControl, {
+      var inspectorControls = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, {
+        initialOpen: true,
+        title: __("Display", "pmpro-advanced-levels-shortcode")
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(SelectControl, {
         label: __('Choose a Template', 'pmpro-advanced-levels-shortcode'),
         options: templateOptions,
         value: template,
@@ -436,14 +442,18 @@ var Edit = /*#__PURE__*/function (_Component) {
 
           _this2.loadShortcode();
         }
-      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __("Select Levels to Display", "pmpro-advanced-levels-shortcode")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), this.outputLevelCheckboxes(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(ToggleControl, {
-        label: __("Display a Back Link?", "pmpro-advanced-levels-shortcode"),
-        help: __("Hide or show the Return to Home or Return to Your Account below the levels layout", "pmpro-advanced-levels-shortcode"),
-        checked: backLink,
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __("Select Levels to Display", "pmpro-advanced-levels-shortcode")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), this.outputLevelCheckboxes()), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, {
+        initialOpen: false,
+        title: __("Display Text", "pmpro-advanced-levels-shortcode")
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(TextControl, {
+        label: __('Account Button', 'pmpro-advanced-levels-shortcode'),
+        value: accountButton,
         onChange: function onChange(value) {
           _this2.props.setAttributes({
-            backLink: value
+            accountButton: value
           });
+
+          _this2.props.attributes.accountButton = value; // todo - Add timer to load timer on change.
 
           _this2.loadShortcode();
         }
@@ -468,6 +478,35 @@ var Edit = /*#__PURE__*/function (_Component) {
           });
 
           _this2.props.attributes.renewButton = value; // todo - Add timer to load timer on change.
+
+          _this2.loadShortcode();
+        }
+      })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, {
+        initialOpen: false,
+        title: __("Options", "pmpro-advanced-levels-shortcode")
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(ToggleControl, {
+        label: __("Display a Back Link?", "pmpro-advanced-levels-shortcode"),
+        help: __("Hide or show the Return to Home or Return to Your Account below the levels layout", "pmpro-advanced-levels-shortcode"),
+        checked: backLink,
+        onChange: function onChange(value) {
+          _this2.props.setAttributes({
+            backLink: value
+          });
+
+          _this2.props.attributes.backLink = value;
+
+          _this2.loadShortcode();
+        }
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(ToggleControl, {
+        label: __("Display Description?", "pmpro-advanced-levels-shortcode"),
+        help: __("Hide or show the level description", "pmpro-advanced-levels-shortcode"),
+        checked: description,
+        onChange: function onChange(value) {
+          _this2.props.setAttributes({
+            description: value
+          });
+
+          _this2.props.attributes.description = value;
 
           _this2.loadShortcode();
         }
