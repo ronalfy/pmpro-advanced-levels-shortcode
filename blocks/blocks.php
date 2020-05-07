@@ -39,6 +39,7 @@ function pmpro_advanced_levels_block_editor_scripts() {
 		array(),
 		PMPRO_ADVANCED_LEVELS_VERSION
 	);
+	wp_enqueue_style( 'pmpro-advanced-levels-styles', plugins_url( 'css/pmpro-advanced-levels.css', PMPRO_ADVANCED_LEVELS_FILE ) );
 
 	// Adding translation functionality to Gutenberg blocks/JS.
 	if ( function_exists( 'wp_set_script_translations' ) ) {

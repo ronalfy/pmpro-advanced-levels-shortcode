@@ -27,6 +27,8 @@ export default class Edit extends Component {
 			validationErrors: false,
 			validationMessage: "",
 			view: this.props.attributes.view,
+			shortcodeOutput: '',
+			compare: false,
 		};
 	}
 
@@ -37,6 +39,7 @@ export default class Edit extends Component {
 		this.setState({
 			selectedLevels: selectedLevels,
 		});
+		this.loadShortcode();
 	};
 
 	isChecked = (levelId) => {
@@ -127,7 +130,10 @@ export default class Edit extends Component {
 				template: template,
 			})
 			.then((response) => {
-				console.log( response );
+				let htmlToReactParser = new HtmlToReactParser();
+				this.setState( {
+					shortcodeOutput: htmlToReactParser.parse(response.data),
+				})
 			});
 	};
 
@@ -153,7 +159,6 @@ export default class Edit extends Component {
 			template,
 			view,
 		} = attributes;
-		console.log(levels);
 		const templateOptions = [
 			{ value: "none", label: __("None", "pmpro-advanced-levels-shortcode") },
 			{
@@ -205,6 +210,38 @@ export default class Edit extends Component {
 		const inspectorControls = (
 			<InspectorControls>
 				<PanelBody>
+					<SelectControl
+						label={__('Choose a Template', 'pmpro-advanced-levels-shortcode')}
+						options={templateOptions}
+						value={template}
+						onChange={(value) => {
+							this.props.attributes.template = value;
+							this.props.setAttributes({
+								template: value,
+							});
+							this.loadShortcode();
+						}}
+					/>
+					<SelectControl
+						label={__('Choose a Layout', 'pmpro-advanced-levels-shortcode')}
+						options={layoutOptions}
+						value={layout}
+						onChange={(value) => {
+							this.props.attributes.layout = value;
+							this.props.setAttributes({
+								layout: value,
+							});
+							this.loadShortcode();
+						}}
+					/>
+					<label>
+						{__(
+							"Select Levels to Display",
+							"pmpro-advanced-levels-shortcode"
+						)}
+					</label>
+					<br />
+					{this.outputLevelCheckboxes()}
 					<ToggleControl
 						label={__(
 							"Display a Back Link?",
@@ -224,72 +261,18 @@ export default class Edit extends Component {
 				</PanelBody>
 			</InspectorControls>
 		);
-		if (view === "build") {
+		if ( ! this.state.compare ) {
 			return (
 				<Fragment>
-					<PanelBody>
-						<h2>{__("Choose a Layout", "pmpro-advanced-levels-shortcode")}</h2>
-						<div>
-							<label>{__("Template", "pmpro-advanced-levels-shortcode")}</label>
-							<br />
-							<SelectControl
-								options={templateOptions}
-								value={template}
-								onChange={(value) => {
-									this.props.setAttributes({
-										template: value,
-									});
-								}}
-							/>
-						</div>
-						<div>
-							<label>{__("Layout", "pmpro-advanced-levels-shortcode")}</label>
-							<br />
-							<SelectControl
-								options={layoutOptions}
-								value={layout}
-								onChange={(value) => {
-									this.props.setAttributes({
-										layout: value,
-									});
-								}}
-							/>
-						</div>
-						<div>
-							<label>
-								{__(
-									"Select Levels to Display",
-									"pmpro-advanced-levels-shortcode"
-								)}
-							</label>
-							<br />
-							{this.outputLevelCheckboxes()}
-						</div>
-						<div>
-							<Button
-								isPrimary={true}
-								isLarge={true}
-								onClick={this.validateLayout}
-								disabled={this.isLayoutButtonDisabled()}
-							>
-								{__("Build Layout", "pmpro-advanced-levels-shortcode")}
-							</Button>
-						</div>
-						{this.state.validationErrors && (
-							<Fragment>
-								<div className="notice error">
-									<strong>
-										<p>{this.state.validationMessage}</p>
-									</strong>
-								</div>
-							</Fragment>
-						)}
-					</PanelBody>
+				{inspectorControls}
+					<Fragment>
+						{this.state.shortcodeOutput}
+					</Fragment>
 				</Fragment>
 			);
 		}
-		if (view === "preview") {
-			return <Fragment>test</Fragment>;
-		}
+		return (
+			<div>{__('Compare table', 'pmpro-advanced-levels-shortcode')}</div>
+		)
 	}
 }

@@ -235,6 +235,8 @@ var Edit = /*#__PURE__*/function (_Component) {
       _this.setState({
         selectedLevels: selectedLevels
       });
+
+      _this.loadShortcode();
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "isChecked", function (levelId) {
@@ -321,7 +323,11 @@ var Edit = /*#__PURE__*/function (_Component) {
         renew_button: renewButton,
         template: template
       }).then(function (response) {
-        console.log(response);
+        var htmlToReactParser = new HtmlToReactParser();
+
+        _this.setState({
+          shortcodeOutput: htmlToReactParser.parse(response.data)
+        });
       });
     });
 
@@ -335,7 +341,9 @@ var Edit = /*#__PURE__*/function (_Component) {
       selectedLevels: _this.props.attributes.levels || {},
       validationErrors: false,
       validationMessage: "",
-      view: _this.props.attributes.view
+      view: _this.props.attributes.view,
+      shortcodeOutput: '',
+      compare: false
     };
     return _this;
   }
@@ -360,7 +368,6 @@ var Edit = /*#__PURE__*/function (_Component) {
           renewButton = attributes.renewButton,
           template = attributes.template,
           view = attributes.view;
-      console.log(levels);
       var templateOptions = [{
         value: "none",
         label: __("None", "pmpro-advanced-levels-shortcode")
@@ -402,7 +409,33 @@ var Edit = /*#__PURE__*/function (_Component) {
         value: "compare_table",
         label: __("Compare Table", "pmpro-advanced-levels-shortcode")
       }];
-      var inspectorControls = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(ToggleControl, {
+      var inspectorControls = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(SelectControl, {
+        label: __('Choose a Template', 'pmpro-advanced-levels-shortcode'),
+        options: templateOptions,
+        value: template,
+        onChange: function onChange(value) {
+          _this2.props.attributes.template = value;
+
+          _this2.props.setAttributes({
+            template: value
+          });
+
+          _this2.loadShortcode();
+        }
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(SelectControl, {
+        label: __('Choose a Layout', 'pmpro-advanced-levels-shortcode'),
+        options: layoutOptions,
+        value: layout,
+        onChange: function onChange(value) {
+          _this2.props.attributes.layout = value;
+
+          _this2.props.setAttributes({
+            layout: value
+          });
+
+          _this2.loadShortcode();
+        }
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __("Select Levels to Display", "pmpro-advanced-levels-shortcode")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), this.outputLevelCheckboxes(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(ToggleControl, {
         label: __("Display a Back Link?", "pmpro-advanced-levels-shortcode"),
         help: __("Hide or show the Return to Home or Return to Your Account below the levels layout", "pmpro-advanced-levels-shortcode"),
         checked: backLink,
@@ -413,36 +446,11 @@ var Edit = /*#__PURE__*/function (_Component) {
         }
       })));
 
-      if (view === "build") {
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Fragment, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h2", null, __("Choose a Layout", "pmpro-advanced-levels-shortcode")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __("Template", "pmpro-advanced-levels-shortcode")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(SelectControl, {
-          options: templateOptions,
-          value: template,
-          onChange: function onChange(value) {
-            _this2.props.setAttributes({
-              template: value
-            });
-          }
-        })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __("Layout", "pmpro-advanced-levels-shortcode")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(SelectControl, {
-          options: layoutOptions,
-          value: layout,
-          onChange: function onChange(value) {
-            _this2.props.setAttributes({
-              layout: value
-            });
-          }
-        })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("label", null, __("Select Levels to Display", "pmpro-advanced-levels-shortcode")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", null), this.outputLevelCheckboxes()), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Button, {
-          isPrimary: true,
-          isLarge: true,
-          onClick: this.validateLayout,
-          disabled: this.isLayoutButtonDisabled()
-        }, __("Build Layout", "pmpro-advanced-levels-shortcode"))), this.state.validationErrors && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Fragment, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
-          className: "notice error"
-        }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("strong", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", null, this.state.validationMessage))))));
+      if (!this.state.compare) {
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Fragment, null, inspectorControls, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Fragment, null, this.state.shortcodeOutput));
       }
 
-      if (view === "preview") {
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Fragment, null, "test");
-      }
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", null, __('Compare table', 'pmpro-advanced-levels-shortcode'));
     }
   }]);
 
